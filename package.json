@@ -1,6 +1,6 @@
 {
   "name": "@joelaw9/node-red-threshold",
-  "version": "0.0.9",
+  "version": "1.0.1",
   "description": "Threshold",
   "scripts": {
     "test": "standard --fix"

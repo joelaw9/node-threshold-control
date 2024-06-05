@@ -135,7 +135,6 @@ module.exports = function (RED) {
         counter = offDelay
         countDown = true
       }
-      console.log(msg);
       message = msg;
     })
 
