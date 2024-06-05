@@ -1,5 +1,4 @@
 <script type="text/javascript">
-
     function isPositive(value) {
       return value >= 0;
     }
@@ -11,9 +10,9 @@
       return isPositive(Number(value));
     }
 
-    RED.nodes.registerType('threshold-control',{
+    RED.nodes.registerType('threshold',{
         category: 'function',
-        paletteLabel: 'Threshold control',
+        paletteLabel: 'Threshold',
         color: '#f7ab3e',
         defaults: {
             name: {value: ""},
@@ -27,10 +26,10 @@
             offDelay: {value: 5, validate:validatePositiveNumber}
         },
         inputs: 1,
-        outputs: 3,
+        outputs: 2,
         icon: "victronenergy.svg",
         label: function() {
-            return this.name||"Threshold control";
+            return this.name||"Threshold";
         },
         oneditprepare: function() {
           var optionNothing = { value: "nul", label: "Nothing", hasValue: false};
@@ -38,19 +37,19 @@
           $('#node-input-onPayload').typedInput({
             default: 'bool',
             typeField: $("#node-input-payloadOnType"),
-            types: ['str','num','bool','json','bin','re','date','env', optionNothing]
+            types: ['flow','global','str','num','bool','json','bin','re','date','env', optionNothing]
           });
 
           $('#node-input-offPayload').typedInput({
             default: 'bool',
             typeField: $("#node-input-payloadOffType"),
-            types: ['msg','str','num','bool','json','bin','re','date','env', optionNothing]
+            types: ['flow','global','msg','str','num','bool','json','bin','re','date','env', optionNothing]
           });
         }
     });
 </script>
 
-<script type="text/html" data-template-name="threshold-control">
+<script type="text/html" data-template-name="threshold">
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
@@ -83,7 +82,7 @@
     </div>
 </script>
 
-<script type="text/html" data-help-name="threshold-control">
+<script type="text/html" data-help-name="threshold">
   <p>With the treshold control you can enable or disable a delayed output when the input
     passes the or or off threshold. 
   </p>

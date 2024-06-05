@@ -1,8 +1,7 @@
 {
-  "name": "node-threshold-control",
-  "version": "0.0.8",
-  "description": "Threshold control",
-  "main": "index.js",
+  "name": "node-red-threshold",
+  "version": "0.0.9",
+  "description": "Threshold",
   "scripts": {
     "test": "standard --fix"
   },
@@ -11,7 +10,7 @@
     "victron",
     "threshold control"
   ],
-  "author": "Dirk-Jan Faber <dfaber@victronenergy.com>",
+  "author": "Joseph Lawson & Dirk-Jan Faber",
   "license": "MIT",
   "node-red": {
     "nodes": {
@@ -21,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dirkjanfaber/node-threshold-control"
+    "url": "https://github.com/joelaw9/node-threshold-control"
   },
   "devDependencies": {},
   "engines": {

@@ -17,6 +17,7 @@ module.exports = function (RED) {
     let offThreshold = Number(config.offThreshold)
     let onDelay = Math.round(Number(config.onDelay))
     let offDelay = Math.round(Number(config.offDelay))
+    let message = null;
 
     const intervalId = setInterval(function () {
       if (countDown) {
@@ -33,11 +34,6 @@ module.exports = function (RED) {
             text: `Switching ${desiredState} in ${counter} sec`
           })
         }
-        if (desiredState === 'on') {
-          node.send([null, { payload: counter, blink: counter % 2 }, null])
-        } else {
-          node.send([null, null, { payload: counter, blink: counter % 2 }])
-        }
         if (counter > 0) {
           counter--
         } else {
@@ -45,14 +41,12 @@ module.exports = function (RED) {
         }
         if (sendOutput) {
           if (desiredState === 'on' && node.config.payloadOnType !== 'nul') {
-            node.send({
-              payload: RED.util.evaluateNodeProperty(node.config.onPayload, node.config.payloadOnType, node)
-            })
+            message.payload = RED.util.evaluateNodeProperty(node.config.onPayload, node.config.payloadOnType, node);
+            node.send([message, null]);
           }
           if (desiredState === 'off' && node.config.payloadOffType !== 'nul') {
-            node.send({
-              payload: RED.util.evaluateNodeProperty(node.config.offPayload, node.config.payloadOffType, node)
-            })
+            message.payload = RED.util.evaluateNodeProperty(node.config.offPayload, node.config.payloadOffType, node)
+            node.send([null, message]);
           }
           sendOutput = false
           countDown = false
@@ -112,7 +106,7 @@ module.exports = function (RED) {
         fill = 'blue'
       }
 
-      msg.topic = 'Threshold control'
+      msg.topic = 'Threshold'
 
       if (countDown && desiredState === 'on' && msg.payload < onThreshold) {
         desiredState = State
@@ -141,6 +135,8 @@ module.exports = function (RED) {
         counter = offDelay
         countDown = true
       }
+      console.log(msg);
+      message = msg;
     })
 
     node.on('close', function () {
@@ -152,5 +148,5 @@ module.exports = function (RED) {
     }
   }
 
-  RED.nodes.registerType('threshold-control', ThresholdControl)
+  RED.nodes.registerType('threshold', ThresholdControl)
 }
