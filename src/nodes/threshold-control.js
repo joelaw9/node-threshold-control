@@ -67,23 +67,23 @@ module.exports = function (RED) {
     }, 1000)
 
     node.on('input', function (msg) {
-      if (msg.onThreshold && !(isNaN(msg.onThreshold) || msg.onThreshold === "")) {
+      if ('onThreshold' in msg && !(isNaN(msg.onThreshold) || msg.onThreshold === "")) {
         onThreshold = msg.onThreshold
       }
 
-      if (msg.offThreshold && !(isNaN(msg.offThreshold) || msg.offThreshold === "")) {
+      if ('offThreshold' in msg  && !(isNaN(msg.offThreshold) || msg.offThreshold === "")) {
         offThreshold = msg.offThreshold
       }
 
-      if (msg.onDelay && !(isNaN(msg.onDelay) || msg.onDelay === "")) {
+      if ('onDelay' in msg  && !(isNaN(msg.onDelay) || msg.onDelay === "")) {
         onDelay = Math.round(msg.onDelay)
       }
 
-      if (msg.offDelay && !(isNaN(msg.offDelay) || msg.offDelay === "")) {
+      if ('offDelay' in msg  && !(isNaN(msg.offDelay) || msg.offDelay === "")) {
         offDelay = Math.round(msg.offDelay)
       }
 
-      if (msg.payload && (isNaN(msg.payload) || msg.payload === "")) {
+      if ('payload' in msg  && (isNaN(msg.payload) || msg.payload === "")) {
         node.status({
           fill: 'red',
           shape: 'dot',
@@ -92,12 +92,12 @@ module.exports = function (RED) {
         return
       }
 
-      if (!onThreshold || isNaN(onThreshold)) {
+      if (isNaN(onThreshold)) {
         node.status({ fill: 'red', shape: 'dot', text: 'No or non-mumerical ON threshold set' })
         return
       }
 
-      if (!offThreshold || isNaN(offThreshold)) {
+      if (isNaN(offThreshold)) {
         node.status({ fill: 'red', shape: 'dot', text: 'No or non-mumerical OFF threshold set' })
         return
       }
